@@ -10,19 +10,20 @@ const $storyascii = document.getElementById('story-ascii')
 
 //features - function to see if a choice is possible, not just if it's happened (like robot hand turning itself off and on, etc)
 
-//cheat codes - activate to skip ahead
+/*cheat codes - activate to skip ahead
 let history = ["55", "1", "1", "1", "1", "1", "1", "1", "1", "1", "1", "2", "3", "4", "6", "7", "8", "55", "55", "55", "8", "8", "8", "8", "15", "9", "9", "9", "9", "9", "9", "9", "9", "9", "16", "9", "9", "9", "9", "9", "9", "9", "16", "18", "10", "13", "13", "13", "13", "13", "13", "13", "13", "13", "13", "13", "17", "14", "19", "19", "19", "19", "19", "19", "11", "11", "11", "12", "19", "11", "11", "20", "20", "21", "22", "23", "24", "25", "26", "28"] //, "28", "29", "30", "31", "31", "31", "31", "31", "32", "32", "32", "32", "32", "32", "32", "33", "34"]
 let inventory = ["Etsy business: organic mud masks", "INVESTMENTS", "household-name status", "an everpresent dusting of fatalism", "a silvery feeling of impenetrability around your vital organs", "stories from the city", "stories from the city", "stories from the city", "stories from the city", "stories from the city", "stories from the city", "translucent green scales", "translucent green scales", "translucent green scales", "stories from the city", "translucent green scales", "translucent green scales", "a tendency to take long salty baths", "a tendency to take long salty baths", "a primal urge"]
 let currentAction = 28
+*/
 
 
 $inventorytitle.innerHTML = "Inventory"
 
-/*gameplay start - activate to start from beginning 
+// gameplay start - activate to start from beginning 
 let currentAction = 55 // key to access "action" object, changes onclick. Starts at first state.
 let inventory = []
 let history = [] //test array - should be blank at start of game 
-*/
+//
 
 
 //HISTORY FUNCTIONS
@@ -347,8 +348,8 @@ allStories = {
 
 
 }
-let seastory = 0;
 
+let seastory = 0;
 let sizey = 1.5
 
 function gamePlay(number=currentAction) {
@@ -356,9 +357,11 @@ function gamePlay(number=currentAction) {
     allStories["1"] = randomChoice(digPotato);
     allStories["8"] = randomChoice(sellMud);
     allStories["19"] = randomChoice(cityStories);
-    allStories["29"] = seaStories[seastory];
+    if (happenedEver("29")) {
+        allStories["29"] = seaStories[seastory];
+        seastory += 1;
+    }
     allStories["35"] = sleepStories[seastory];
-    seastory += 1;
     updateHistory();
     console.log(history);
     if (!happenedEver("34")) {
@@ -366,7 +369,7 @@ function gamePlay(number=currentAction) {
     } else if (happenedEver("34")) //update this later?
             {thinkThought(allActions[number].objectGive)}
     removeAllItems(allActions[number].objectRemove);
-    if (happenedEver("26") && !happenedEver("34")) {
+    if (happenedEver("28") && !happenedEver("34")) {
         $inventorytitle.innerHTML = "?????";
         function toQuestionMarks(word) {
             return "?".repeat(word.length)
